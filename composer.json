@@ -1,0 +1,26 @@
+{
+    "name": "sovic/file-manager-sdk",
+    "description": "File Manager PHP SDK",
+    "keywords": [
+        "file manager",
+        "php",
+        "sdk"
+    ],
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Edisk\\Common\\": "src/"
+        },
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require": {
+        "php": "^8.0",
+        "ext-iconv": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    }
+}
