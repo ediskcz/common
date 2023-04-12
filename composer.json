@@ -1,10 +1,9 @@
 {
-    "name": "sovic/file-manager-sdk",
-    "description": "File Manager PHP SDK",
+    "name": "edisk/common",
+    "description": "eDisk common lib",
     "keywords": [
-        "file manager",
+        "eDisk",
         "php",
-        "sdk"
     ],
     "type": "library",
     "autoload": {
