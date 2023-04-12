@@ -3,7 +3,7 @@
     "description": "eDisk common lib",
     "keywords": [
         "eDisk",
-        "php",
+        "php"
     ],
     "type": "library",
     "autoload": {
