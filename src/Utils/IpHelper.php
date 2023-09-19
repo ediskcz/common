@@ -8,7 +8,7 @@ class IpHelper
      * Checks if $string IP matches one in $ips array (either exact match or is in IP range IP1-IP2)
      * Supports IPv4
      */
-    public static function isIpMatch(string $string, array $ips): bool
+    public static function isMatch(string $string, array $ips): bool
     {
         foreach ($ips as $ip) {
             if ($ip === $string) {
