@@ -14,13 +14,24 @@
             "src/"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Edisk\\Common\\": "tests/src/"
+        },
+        "classmap": [
+            "src/"
+        ]
+    },
     "require": {
         "php": "^8.0",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "matomo/device-detector": "^6.1"
+        "matomo/device-detector": "^6.1",
+        "symfony/validator": "^6.0",
+        "egulias/email-validator": "^3.2"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^9.6"
     }
 }
