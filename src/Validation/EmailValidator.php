@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Validation;
 
 class EmailValidator
 {
-    public static function validate(string $email, bool $strict = false): ConstraintViolationListInterface|bool
+    public static function validate(string $email): ConstraintViolationListInterface|bool
     {
         $validator = Validation::createValidator();
         $violations = $validator->validate(
@@ -16,7 +16,7 @@ class EmailValidator
             [
                 new Email(
                     [
-                        'mode' => $strict ? Email::VALIDATION_MODE_STRICT : Email::VALIDATION_MODE_LOOSE,
+                        'mode' => Email::VALIDATION_MODE_STRICT,
                     ]
                 ),
             ]
