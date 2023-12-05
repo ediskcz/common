@@ -7,10 +7,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CountryHelper
 {
-    public static function detectFromRequest(Request $request, array $defaultByLang, array $defaultByHost = []): ?string
-    {
+    public static function detectFromRequest(
+        Request $request,
+        array   $defaultByLang,
+        array   $defaultByHost = []
+    ): ?string {
         $detectedCountry = null;
-        $browserLang = LocaleHelper::getBrowserLanguage();
+        $availableLanguages = array_keys($defaultByLang);
+        $browserLang = LocaleHelper::getBrowserLanguage($availableLanguages);
         if ($browserLang) {
             $detectedCountry = $defaultByLang[$browserLang] ?? null;
         }

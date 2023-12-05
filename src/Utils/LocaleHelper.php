@@ -31,8 +31,8 @@ class LocaleHelper
             }
         }
 
-        if (empty($languages)) {
-            return array_key_first($availableLanguages);
+        if (empty($availableLanguages)) {
+            return array_key_first($languages);
         }
 
         // look through sorted list and return first that we support in our languages
