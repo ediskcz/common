@@ -9,6 +9,7 @@ final class EmailValidatorTest extends TestCase
     public function emailProvider(): array
     {
         $data = [];
+        $data[] = ['', false];
         $data[] = ['test@example.com', true];
         $data[] = ['user@subdomain.domain.co', true];
         $data[] = ['invalid-email', false];
