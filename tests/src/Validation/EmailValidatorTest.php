@@ -20,6 +20,7 @@ final class EmailValidatorTest extends TestCase
         $data[] = ['damianpk7o2.pl', false];
         $data[] = ['Rudolf33', false];
         $data[] = ['michal.kotlar11@email.cz.', false];
+        $data[] = ['míchal.podesva92@gmail.com', true];
 
         return $data;
     }
