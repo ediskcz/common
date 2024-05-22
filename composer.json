@@ -24,13 +24,13 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "ext-iconv": "*",
         "ext-mbstring": "*",
         "matomo/device-detector": "^6.1",
-        "symfony/validator": "^6.0",
+        "symfony/validator": "^7.0",
         "egulias/email-validator": "^3.2",
-        "symfony/http-foundation": "^6.0",
+        "symfony/http-foundation": "^7.0",
         "geoip2/geoip2": "^2.13"
     },
     "require-dev": {
