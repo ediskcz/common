@@ -13,7 +13,7 @@ use RuntimeException;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 use Symfony\Component\Lock\LockFactory;
-use Symfony\Component\Lock\Store\PdoStore;
+use Symfony\Component\Lock\Store\DoctrineDbalStore;
 
 class Services
 {
@@ -73,7 +73,7 @@ class Services
         }
 
         $databaseDsn = $_ENV['DATABASE_URL'] ?? '';
-        $store = new PdoStore(
+        $store = new DoctrineDbalStore(
             $databaseDsn,
             [
                 'db_table' => 'lock_keys',
