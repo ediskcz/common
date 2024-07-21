@@ -15,6 +15,7 @@ abstract class AbstractSearchRequest
         'offset' => 0,
         'query' => null,
         'sort' => 'relevance',
+        'layout' => 'grid',
     ];
 
     private mixed $user = null;
