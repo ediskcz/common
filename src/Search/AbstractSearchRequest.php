@@ -77,7 +77,7 @@ abstract class AbstractSearchRequest
         return $this->options['query'];
     }
 
-    abstract public function getType(): string;
+    abstract public function getModel(): string;
 
     abstract public function getSortingTypes(): array;
 
@@ -100,8 +100,11 @@ abstract class AbstractSearchRequest
         $options = $this->options;
 
         // temp, backward compatibility
+        $options['per_page'] = $options['limit'];
+        // temp, backward compatibility
         $options['search'] = $options['query'];
-        // for route pagination links, 0-based to 1-based
+
+        // p = page, for route pagination links, 0-based to 1-based
         $options['p'] = ((int) floor($options['offset'] / $options['limit'])) + 1;
 
         return $options;
@@ -115,5 +118,24 @@ abstract class AbstractSearchRequest
     public function getUser(): mixed
     {
         return $this->user;
+    }
+
+    public function getLayouts(): array
+    {
+        return ['grid', 'list'];
+    }
+
+    public function setLayout(string $layout): void
+    {
+        if (!in_array($layout, $this->getLayouts(), true)) {
+            throw new InvalidArgumentException('Invalid layout');
+        }
+
+        $this->options['layout'] = $layout;
+    }
+
+    public function getLayout(): string
+    {
+        return $this->options['layout'];
     }
 }
