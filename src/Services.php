@@ -9,6 +9,7 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
+use DoctrineExtensions\Query\Mysql\MatchAgainst;
 use RuntimeException;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
@@ -54,6 +55,7 @@ class Services
             $config->setProxyDir(MAIN_DOCROOT . '/var/cache/doctrine/orm/Proxies');
             $config->setProxyNamespace('EntityManager\Proxies');
             $config->setAutoGenerateProxyClasses($isDevMode);
+            $config->addCustomStringFunction('MATCH', MatchAgainst::class);
 
             $connection = DriverManager::getConnection($connectionParams, $config);
             $entityManager = new EntityManager($connection, $config);
