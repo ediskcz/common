@@ -2,12 +2,13 @@
 
 namespace Edisk\Common\Search;
 
+use Edisk\Common\Pagination\Pagination;
 use InvalidArgumentException;
 
 abstract class AbstractSearchRequest
 {
-    private const HARD_LIMIT = 100;
-    private const RESULT_WINDOW = 10000;
+    public const HARD_LIMIT = 100;
+    public const RESULT_WINDOW = 10000;
 
     protected array $options = [
         'collectionId' => null,
@@ -16,6 +17,7 @@ abstract class AbstractSearchRequest
         'query' => null,
         'sort' => 'relevance',
         'layout' => 'grid',
+        'page' => 1,
     ];
 
     private mixed $user = null;
@@ -50,6 +52,19 @@ abstract class AbstractSearchRequest
     public function getLimit(): int
     {
         return $this->options['limit'];
+    }
+
+    public function getPage(): int
+    {
+        $options = $this->options;
+
+        return ((int) floor($options['offset'] / $options['limit'])) + 1;
+    }
+
+    public function setPage(int $page): void
+    {
+        $this->options['page'] = $page;
+        $this->options['offset'] = ($page - 1) * $this->getLimit();
     }
 
     public function setOffset(int $offset): void
@@ -106,7 +121,7 @@ abstract class AbstractSearchRequest
         $options['search'] = $options['query'];
 
         // p = page, for route pagination links, 0-based to 1-based
-        $options['p'] = ((int) floor($options['offset'] / $options['limit'])) + 1;
+        $options['p'] = $this->getPage();
 
         return $options;
     }
@@ -138,5 +153,10 @@ abstract class AbstractSearchRequest
     public function getLayout(): string
     {
         return $this->options['layout'];
+    }
+
+    public function getPagination(int $total): Pagination
+    {
+        return new Pagination($total, $this->getLimit(), $this->getPage());
     }
 }
