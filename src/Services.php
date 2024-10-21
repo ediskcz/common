@@ -3,11 +3,9 @@
 namespace Edisk\Common;
 
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Tools\DsnParser;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use DoctrineExtensions\Query\Mysql\MatchAgainst;
 use RuntimeException;
@@ -15,6 +13,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\DoctrineDbalStore;
+use Throwable;
 
 class Services
 {
@@ -38,13 +37,14 @@ class Services
         try {
             $dsnParser = new DsnParser(['mysql' => 'mysqli', 'postgres' => 'pdo_pgsql']);
             $connectionParams = $dsnParser->parse($_ENV['DATABASE_URL'] ?? '');
+            $cacheDir = MAIN_DOCROOT . '/var/cache/doctrine/orm';
 
             if ($isDevMode) {
                 $queryCache = new ArrayAdapter();
                 $metadataCache = new ArrayAdapter();
             } else {
-                $queryCache = new PhpFilesAdapter('doctrine_queries');
-                $metadataCache = new PhpFilesAdapter('doctrine_metadata');
+                $queryCache = new PhpFilesAdapter('doctrine_queries', 0, $cacheDir . '/queries');
+                $metadataCache = new PhpFilesAdapter('doctrine_metadata', 0, $cacheDir . '/metadata');
             }
 
             $config = new Configuration;
@@ -52,14 +52,14 @@ class Services
             $driverImpl = new AttributeDriver($paths, true);
             $config->setMetadataDriverImpl($driverImpl);
             $config->setQueryCache($queryCache);
-            $config->setProxyDir(MAIN_DOCROOT . '/var/cache/doctrine/orm/Proxies');
+            $config->setProxyDir($cacheDir . '/proxies');
             $config->setProxyNamespace('EntityManager\Proxies');
             $config->setAutoGenerateProxyClasses($isDevMode);
             $config->addCustomStringFunction('MATCH', MatchAgainst::class);
 
             $connection = DriverManager::getConnection($connectionParams, $config);
             $entityManager = new EntityManager($connection, $config);
-        } catch (Exception|MissingMappingDriverImplementation $e) {
+        } catch (Throwable $e) {
             throw new RuntimeException('Cannot create entity manager', 0, $e);
         }
 
