@@ -7,7 +7,7 @@ use RuntimeException;
 class Host
 {
     /**
-     * Get current transfer rate in bytes
+     * Get the current transfer rate in bytes
      */
     public static function getCurrentTransferRate(string $interface, int $delay = 5): array
     {

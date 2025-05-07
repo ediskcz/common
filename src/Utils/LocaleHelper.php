@@ -19,7 +19,7 @@ class LocaleHelper
             if (count($parsed[1])) {
                 // create a list like "en" => 0.8
                 $languages = array_combine($parsed[1], $parsed[4]);
-                // set default to 1 for any without q factor
+                // set default to 1 for any without a q factor
                 foreach ($languages as $lang => $val) {
                     if ($val === '') {
                         $languages[$lang] = 1;
@@ -35,7 +35,7 @@ class LocaleHelper
             return array_key_first($languages);
         }
 
-        // look through sorted list and return first that we support in our languages
+        // look through a sorted list and return first that we support in our languages
         foreach ($languages as $lang => $val) {
             $lang = substr($lang, 0, 2); // only lang from locale code
             if (in_array($lang, $availableLanguages, true)) {
