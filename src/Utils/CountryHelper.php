@@ -2,7 +2,7 @@
 
 namespace Edisk\Common\Utils;
 
-use Edisk\Common\GeoIp\GeoIpHelper;
+use Edisk\Common\GeoIp\IpLocate;
 use Symfony\Component\HttpFoundation\Request;
 
 class CountryHelper
@@ -23,7 +23,7 @@ class CountryHelper
         }
 
         // attempt to find in GeoIp
-        $isoCode = GeoIpHelper::detectIpCountry($request->getClientIp());
+        $isoCode = (new IpLocate())->getIpCountry($request->getClientIp());
         if (empty($isoCode)) {
             return $detectedCountry;
         }
